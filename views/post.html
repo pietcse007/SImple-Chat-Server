@@ -159,7 +159,10 @@
      	function addUser() {
      		if($('#username').val() != "")
      		{
-     			sessionStorage.username = $('#username').val();
+     			var usr = $('#username').val();
+     			var safe = usr.replace(/&/g, '&amp;').replace(/</g, '&lt;')
+     			                      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+     			sessionStorage.username = safe;
      			socket.emit('adduser', sessionStorage.username);
      		}
      		return;
@@ -179,7 +182,8 @@
      	var msg = $('#message').val();
      	if(msg != "")
      	{
-     		var safe = msg.replace(/<(\w)/, '< $1');
+     		var safe = msg.replace(/&/g, '&amp;').replace(/</g, '&lt;')
+     		                      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
      		console.log("message is not null");
      		socket.emit('message', {message: safe, user: user, timestamp: new Date()}); 
      	}
@@ -202,7 +206,8 @@
      		$('#message').val('');
      		if(msg != "")
      		{
-     			var safe = msg.replace(/<(\w)/, '< $1');
+     			var safe = msg.replace(/&/g, '&amp;').replace(/</g, '&lt;')
+     			                      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
      			console.log("message is not null");
      			socket.emit('message', {message: safe, user: user, timestamp: new Date()}); 
      		}
