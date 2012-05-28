@@ -34,6 +34,14 @@ app.configure('production', function(){
 
 // Routes
 
+
+app.get('/', function(req, res) {
+    params = req.params.id;
+	res.sendfile(__dirname +'/views/index.html');
+    });
+
+
+
 app.get('/:id', function(req, res) {
     params = req.params.id;
 	res.sendfile(__dirname +'/views/post.html');
