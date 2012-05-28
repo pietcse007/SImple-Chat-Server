@@ -185,7 +185,7 @@
      		var safe = msg.replace(/&/g, '&amp;').replace(/</g, '&lt;')
      		                      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
      		console.log("message is not null");
-     		socket.emit('message', {message: safe, user: user, timestamp: new Date()}); 
+     		socket.emit('message', {message: safe, user: sessionStorage.username, timestamp: new Date()}); 
      	}
      	});
      	

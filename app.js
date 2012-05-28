@@ -67,12 +67,21 @@ var rooms = [];
 //storing room specific history
 var history = {};
 
+
+function htmlEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+                      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 io.sockets.on('connection', function(socket) {
     
     socket.emit('news', 'testdata');
     
-    socket.on('adduser', function(username) {
-    //store the username in the socket session for this client
+    socket.on('adduser', function(message) {
+    
+	var username = htmlEntities(message);
+
+	//store the username in the socket session for this client
     socket.username = username;
     
     //store room in the socket session
@@ -100,14 +109,18 @@ io.sockets.on('connection', function(socket) {
     socket.emit('userAdded',{username:username, room:socket.room,  timestamp: new Date()});
    
    io.sockets.in(socket.room).emit("updateUsers", {usernames:localUser[""+params]});
-    if(history[""+params] != undefined)
+    if(history[""+params] !== undefined)
     {
         socket.emit('loadHistory',history[""+params]);
     }
     });
     
-    socket.on('message', function(message) {
-        console.log("message");
+    socket.on('message', function(msg) {
+        var message = {};
+        message.message = htmlEntities(msg.message);
+        message.user = htmlEntities(msg.user);
+        message.timestamp = new Date();
+		console.log("message");
         if(history[""+params] === undefined)
         {
             history[""+params] = [];
