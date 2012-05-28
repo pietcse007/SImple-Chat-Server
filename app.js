@@ -92,7 +92,6 @@ io.sockets.on('connection', function(socket) {
     usernames[username] = username;
     
     //adding client to the room speicify array
-  
     if(localUser[""+params] === undefined)
     {
         localUser[""+params] = {};
