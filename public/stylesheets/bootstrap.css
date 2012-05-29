@@ -809,6 +809,7 @@ label select {
 
 .post-inner {
 	margin-left: 10px;
+	word-wrap: break-word;
 }
 
 .post-other {
